@@ -4,6 +4,7 @@ import 'package:hugeicons/hugeicons.dart';
 import 'package:provider/provider.dart';
 import 'package:unwind/components/nue_box.dart';
 import 'package:unwind/components/nue_buttons.dart';
+import 'package:unwind/pages/meditationpage.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
@@ -85,13 +86,21 @@ class Homepage extends StatelessWidget {
               ),
               // SizedBox(height: 32,)/
               // ,
-              NeuBox(
-                child: SizedBox(
-                  // color: Colors.grey.shade400 ,
-                  
-                  width: 300,
-                  height: 36,
-                  child: Center( child: Text("Start Meditation",style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Meditationpage()),
+                  );
+                },
+                child: NeuBox(
+                  child: SizedBox(
+                    // color: Colors.grey.shade400 ,
+                    
+                    width: 300,
+                    height: 36,
+                    child: Center( child: Text("Start Meditation",style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
+                  ),
                 ),
               )
             ],
