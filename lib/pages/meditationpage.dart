@@ -11,12 +11,13 @@ class Meditationpage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment. spaceBetween,
         children: [
+          SizedBox(height: 12,),
           Stack(children:[
           // Lottie.asset('assets/lottie/Meditating Fox.json',height: 250),
             Lottie.asset('assets/lottie/Wave Animation.json',height: 250),
-            Lottie.asset('assets/lottie/Meditating Rabbit.json',height: 250),
+            Lottie.asset('assets/lottie/Meditating Rabbit.json',height: 250,frameRate:FrameRate(0.2)),
             ]),
 
           SizedBox(
@@ -68,7 +69,7 @@ SizedBox(height: 8,),
             
             )),
           ),
-          SizedBox(height: 12,)
+          SizedBox(height: 24,)
 
         ],
       ),
