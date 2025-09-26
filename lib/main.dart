@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:unwind/pages/homepage.dart';
+import 'package:unwind/provider/meditation_provider.dart';
 import 'package:unwind/theme/theme_provider.dart';
 
 void main(){
   runApp(MultiProvider(providers: [
-ChangeNotifierProvider(create: (context)=>ThemeProvider())
+ChangeNotifierProvider(create: (context)=>ThemeProvider()),
+ChangeNotifierProvider(create: (context)=>MeditationProvdier())
     ],
     child: const MyApp(),));
 }
