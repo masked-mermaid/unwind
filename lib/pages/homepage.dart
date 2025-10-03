@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inner_shadow/flutter_inner_shadow.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:provider/provider.dart';
-import 'package:unwind/components/nue_box.dart';
-import 'package:unwind/components/nue_buttons.dart';
+import 'package:unwind/custom_widgets/nue_box.dart';
+import 'package:unwind/custom_widgets/nue_buttons.dart';
 // import 'package:unwind/models/meditationoptions.dart';
 import 'package:unwind/pages/meditationpage.dart';
 import 'package:unwind/provider/meditation_provider.dart';
@@ -32,8 +32,7 @@ class Homepage extends StatelessWidget {
                   // Colors.grey.shade400,
                   Theme.of(context).colorScheme.surface,
               actions: [
-                // SizedBox(width: 24,),
-                Padding(
+                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: InnerShadow(
                     shadows: [
@@ -142,16 +141,20 @@ class Homepage extends StatelessWidget {
                       );
                     },
                     child: NeuBox(
-                      child: SizedBox(
-                        // color: Colors.grey.shade400 ,
-                        width: 300,
-                        height: 36,
-                        child: Center(
-                          child: Text(
-                            "Start Meditation",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                      child: Hero(
+                        tag: 001,
+                        child: SizedBox(
+                          
+                          // color: Colors.grey.shade400 ,
+                          width: 300,
+                          height: 36,
+                          child: Center(
+                            child: Text(
+                              "Start Meditation",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),

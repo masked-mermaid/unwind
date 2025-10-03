@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:lottie/lottie.dart';
-import 'package:unwind/components/nue_box.dart';
+import 'package:unwind/custom_widgets/nue_box.dart';
 
 class Meditationpage extends StatelessWidget {
   const Meditationpage({super.key});
@@ -74,55 +74,61 @@ class Meditationpage extends StatelessWidget {
             ),
           ),
           SizedBox(height: 8),
-          SizedBox(
-            width: 350,
-            height: 69,
-            child: NeuBox(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      
-                      Navigator.pop(context);
-                    },
-                    child: HugeIcon(
-                      icon: HugeIcons.strokeRoundedCancelSquare,
-                      color: Colors.black,
+          Hero(
+            tag: 0010,
+            child: SizedBox(
+              width: 350,
+              height: 69,
+              child: NeuBox(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        
+                        Navigator.pop(context);
+                      },
+                      child: HugeIcon(
+                        icon: HugeIcons.strokeRoundedCancelSquare,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            "Background music feature currently under development",
+                    GestureDetector(
+                      onTap: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              "Background music feature currently under development",
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                    child: HugeIcon(
-                      icon: HugeIcons.strokeRoundedMusicNote01,
-                      color: Colors.black,
+                        );
+                      },
+                      child: HugeIcon(
+                        icon: HugeIcons.strokeRoundedMusicNote01,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      ScaffoldMessenger.of(context). showSnackBar(SnackBar(content: Text("added 30")));
-                    },
-                    child: HugeIcon(
-                      icon: HugeIcons.strokeRoundedGoForward30Sec,
-                      color: Colors.black,
+                    GestureDetector(
+                      onTap: () {
+                        ScaffoldMessenger.of(context). showSnackBar(SnackBar(content: Text("added 30 seconds to the timer"),duration: Duration(milliseconds: 500),));
+                      },
+                      child: HugeIcon(
+                        icon: HugeIcons.strokeRoundedGoForward30Sec,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: HugeIcon(
-                      icon: HugeIcons.strokeRoundedGoBackward30Sec,
-                      color: Colors.black,
+                    GestureDetector(
+                      onTap: () {
+                        ScaffoldMessenger.of(context). showSnackBar(SnackBar(content: Text("removed 30 seconds from the timer"), duration: Duration(milliseconds: 500)));
+
+                      },
+                      child: HugeIcon(
+                        icon: HugeIcons.strokeRoundedGoBackward30Sec,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

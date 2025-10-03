@@ -1,10 +1,27 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:unwind/boxes.dart';
+import 'package:unwind/data/quotes/quotes.dart';
 import 'package:unwind/pages/homepage.dart';
 import 'package:unwind/provider/meditation_provider.dart';
 import 'package:unwind/theme/theme_provider.dart';
 
-void main(){
+
+Future <void> main() async {
+  // init hive
+  await Hive.initFlutter();
+
+  // quotes adapter
+  Hive.registerAdapter(QuotesAdapter());
+
+  //  init box
+  box =await Hive.openBox<Quotes>('quotesbox'); 
+
+
   runApp(MultiProvider(providers: [
 ChangeNotifierProvider(create: (context)=>ThemeProvider()),
 ChangeNotifierProvider(create: (context)=>MeditationProvdier())
