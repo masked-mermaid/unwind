@@ -26,6 +26,9 @@ Quotes({
   
 
 });
+bool get isUsed => used;
+
+  static Future<void> fromJson(item) async {}
 
 
 

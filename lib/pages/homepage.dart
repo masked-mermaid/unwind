@@ -14,6 +14,8 @@ class Homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final optionLists = Provider.of<MeditationProvdier>(context);
+    // final  box =await Hive.openBox<Quotes>('quotesbox');
+
     return Consumer(
       builder:
           (context, value, child) => Scaffold(
@@ -32,7 +34,7 @@ class Homepage extends StatelessWidget {
                   // Colors.grey.shade400,
                   Theme.of(context).colorScheme.surface,
               actions: [
-                 Padding(
+                Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: InnerShadow(
                     shadows: [
@@ -115,13 +117,13 @@ class Homepage extends StatelessWidget {
                           final option = optionLists.selectionOptions[index];
                           final bool isSelected =
                               optionLists.selectedOption == option;
-                      
+
                           return NueButtons(
                             isSelected: isSelected,
                             onTap: () {
-                               optionLists.setSelectionOption(option);
-  print('time changed to ${option.label}');
-                               },
+                              optionLists.setSelectionOption(option);
+                              // print('time changed to ${option.label}');
+                            },
                             child: Text(option.label),
                           );
                         },
@@ -132,19 +134,32 @@ class Homepage extends StatelessWidget {
                   // SizedBox(height: 32,),
                   GestureDetector(
                     onTap: () {
-                      
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Meditationpage(),
-                        ),
-                      );
+                      if (optionLists.selectedOption == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Please select a time"),
+                            action: SnackBarAction(
+                              label: "Ok",
+                              onPressed:
+                                  ScaffoldMessenger.of(
+                                    context,
+                                  ).hideCurrentSnackBar,
+                            ),
+                          ),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Meditationpage(),
+                          ),
+                        );
+                      }
                     },
                     child: NeuBox(
                       child: Hero(
                         tag: 001,
                         child: SizedBox(
-                          
                           // color: Colors.grey.shade400 ,
                           width: 300,
                           height: 36,
