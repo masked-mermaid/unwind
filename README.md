@@ -30,14 +30,16 @@
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/unwind.git
+git clone https://github.com/yourusername/unwind.git ```
 
-cd unwind
+```bash
+cd unwind```
 
-flutter pub get
+```bash
+flutter pub get```
 
-
-flutter run
+```bash
+flutter run```
 
 
 ## Release
