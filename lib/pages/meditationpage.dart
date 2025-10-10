@@ -26,15 +26,15 @@ class Meditationpage extends StatelessWidget {
                 Stack(
                   children: [
                     // Lottie.asset('assets/lottie/Meditating Fox.json',height: 250),
-                    Lottie.asset(
-                      'assets/lottie/Wave Animation.json',
-                      height: 250,
-                    ),
-                    Lottie.asset(
-                      'assets/lottie/Meditating Rabbit.json',
-                      height: 250,
-                 frameRate: FrameRate(0.2),
-                    ),
+                //     Lottie.asset(
+                //       'assets/lottie/Wave Animation.json',
+                //       height: 250,
+                //     ),
+                //     Lottie.asset(
+                //       'assets/lottie/Meditating Rabbit.json',
+                //       height: 250,
+                //  frameRate: FrameRate(0.2),
+                //     ),
                   ],
                 ),
           

@@ -83,6 +83,9 @@ _slidertime=0;
         _slidertime++;
         notifyListeners();
         print("timer started and renning $_slidertime");
+        if (_slidertime==2||_slidertime==98){
+          _triggeraudio();
+        }
         if (_slidertime==100){
 medEnd();
         }
@@ -98,8 +101,15 @@ void disposeTimer() {
 }
 void medEnd(){
   disposeTimer();
+  _isPlaying=false;
+Future.delayed(const Duration(seconds: 3),(){
+  _playUplifting();
 playConfetti();
-_isPlaying=false;
+_playcrowd();
+
+});
+
+
 notifyListeners();
 
 }
@@ -175,10 +185,16 @@ void provideEndTime(){
 
 }
 void _triggeraudio() async{
-  await _audioplayer.play(DeviceFileSource("audio/bell.mp3"));
+
+  await _audioplayer.play(AssetSource("audio/bell.mp3"));
 
 
 }
-
+void _playUplifting()async{
+  await _audioplayer.play(AssetSource("audio/uplifting.mp3"));
+}
+void _playcrowd()async{
+  await _audioplayer.play(AssetSource("audio/crowd.mp3"));
+}
        
 }

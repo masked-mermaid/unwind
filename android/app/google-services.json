@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "668378657237",
+    "project_id": "unwind-5dda1",
+    "storage_bucket": "unwind-5dda1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:668378657237:android:bf51f5152a68658eb2cd5c",
+        "android_client_info": {
+          "package_name": "com.example.unwind"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgP-G-iATiDjbKgF_1MsYGFZ7u7uF7Dtw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
