@@ -47,7 +47,7 @@ flutter run
 
 
 ## Release
--v1.0 [Releases](https://github.com/yourusername/unwind/releases)
+-v1.0 [Releases](https://github.com/masked-mermaid/unwind/releases)
 
 
 ## Technologies
