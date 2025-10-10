@@ -30,7 +30,7 @@
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/unwind.git 
+git clone https://github.com/masked-mermaid/unwind.git 
 ```
 
 ```bash
