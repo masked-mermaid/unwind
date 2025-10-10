@@ -8,6 +8,7 @@ import 'package:unwind/custom_widgets/nue_buttons.dart';
 import 'package:unwind/pages/meditationpage.dart';
 import 'package:unwind/provider/meditation_provider.dart';
 
+
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
 
@@ -152,8 +153,12 @@ class Homepage extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => Meditationpage(),
+                            
                           ),
                         );
+                        optionLists.setplaying();
+                        optionLists.settimer();
+
                       }
                     },
                     child: NeuBox(
