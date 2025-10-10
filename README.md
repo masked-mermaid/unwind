@@ -22,7 +22,7 @@
 
 | Light Mode | Dark Mode |
 |------------|-----------|
-| ![Light Mode](link_to_light_mode_screenshot) | ![Dark Mode](link_to_dark_mode_screenshot) |
+| ![Light Mode](screenshots/lightmode.jpg) | ![Dark Mode](screenshots/darkmode.jpg) |
 
 ---
 
