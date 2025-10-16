@@ -63,7 +63,7 @@ class Meditationpage extends StatelessWidget {
                         child: Slider(
                           min: 0,
                           // Max is the total session time (in seconds)
-                          max: 1,
+                          max: 100,
                           // value.medTime!.inSeconds.toDouble(),
                           // Value is the time remaining (in seconds)
                           value: value.slider,

@@ -86,7 +86,7 @@ class MeditationProvdier extends ChangeNotifier {
     _buttonsActive= true;
     _timer1 = Timer.periodic(const Duration(seconds: 1), (timer) {
       _slidertime+=const Duration(seconds: 1);
-       _slider= _slidertime.inSeconds/_timer.inSeconds;
+       _slider= (_slidertime.inSeconds/_timer.inSeconds)*100;
 
       notifyListeners();
       print("timer started and renning $_slidertime");
@@ -156,7 +156,9 @@ class MeditationProvdier extends ChangeNotifier {
   }
 
   void goTenBackwards() {
-    _slidertime=_slidertime - const Duration(seconds: 10);
+    if (_slidertime - const Duration(seconds: 10)>Duration(seconds: 1)) {
+    _slidertime=_slidertime - const Duration(seconds: 10);}
+
     print(medTime);
 
     notifyListeners();
@@ -169,7 +171,9 @@ class MeditationProvdier extends ChangeNotifier {
   }
 
   void remove30Sconds() {
-    _timer = _timer - const Duration(seconds: 30);
+    if (_timer - const Duration(seconds: 30)>_slidertime) {
+
+    _timer = _timer - const Duration(seconds: 30);}
     print("timer is $_timer");
     notifyListeners();
   }
