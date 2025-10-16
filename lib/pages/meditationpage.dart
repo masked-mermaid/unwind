@@ -90,9 +90,9 @@ class Meditationpage extends StatelessWidget {
                       children: [
                         SizedBox(width: 60),
                         GestureDetector(
-                          onTap: () {
+                          onTap: value.btn? () {
                             value.goTenBackwards();
-                          },
+                          }:null,
                           child: NeuBox(
                             child: HugeIcon(
                               icon: HugeIcons.strokeRoundedGoBackward10Sec,
@@ -101,13 +101,13 @@ class Meditationpage extends StatelessWidget {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () {
+                          onTap:value.btn? () {
                             if (value.isPlaying) {
                               value.pause();
                             } else {
                               value.play();
                             }
-                          },
+                          }:null,
                           child: HugeIcon(
                             icon:
                                 value.isPlaying
@@ -117,9 +117,9 @@ class Meditationpage extends StatelessWidget {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () {
+                          onTap:value.btn? () {
                             value.skipTenForward();
-                          },
+                          }:null,
                           child: NeuBox(
                             child: HugeIcon(
                               icon: HugeIcons.strokeRoundedGoForward10Sec,
@@ -151,7 +151,7 @@ class Meditationpage extends StatelessWidget {
                               ),
                             ),
                             GestureDetector(
-                              onTap: () {
+                              onTap: value.btn?() {
                                 value.add30Sconds();
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
@@ -160,14 +160,14 @@ class Meditationpage extends StatelessWidget {
                                     ),
                                   ),
                                 );
-                              },
+                              }:null,
                               child: HugeIcon(
                                 icon: HugeIcons.strokeRoundedMusicNote01,
                                 color: Colors.black,
                               ),
                             ),
                             GestureDetector(
-                              onTap: () {
+                              onTap:value.btn? () {
                                 value.add30Sconds();
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
@@ -185,14 +185,14 @@ class Meditationpage extends StatelessWidget {
                                     ),
                                   ),
                                 );
-                              },
+                              }:null,
                               child: HugeIcon(
                                 icon: HugeIcons.strokeRoundedGoForward30Sec,
                                 color: Colors.black,
                               ),
                             ),
                             GestureDetector(
-                              onTap: () {
+                              onTap:value.btn?() {
                                 value.remove30Sconds();
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
@@ -210,7 +210,7 @@ class Meditationpage extends StatelessWidget {
                                     ),
                                   ),
                                 );
-                              },
+                              }:null,
                               child: HugeIcon(
                                 icon: HugeIcons.strokeRoundedGoBackward30Sec,
                                 color: Colors.black,

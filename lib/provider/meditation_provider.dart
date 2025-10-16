@@ -33,6 +33,7 @@ class MeditationProvdier extends ChangeNotifier {
   late Timer _timer1;
   late ConfettiController _confttieController;
   late double _slider=0.0;
+  bool _buttonsActive= true;
 
   // getters
   Meditationoptions? get selectedOption => _selectedTime;
@@ -42,6 +43,7 @@ class MeditationProvdier extends ChangeNotifier {
   Duration get sliderTime => _slidertime;
   ConfettiController get confettiController => _confttieController;
   double get slider =>_slider;
+  bool get btn=>_buttonsActive;
 
   void playConfetti() {
     _confttieController.play();
@@ -92,6 +94,8 @@ class MeditationProvdier extends ChangeNotifier {
       }
       if (_slidertime >= _timer) {
         medEnd();
+        _buttonsActive=false;
+        notifyListeners();
       }
     });
   }
