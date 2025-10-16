@@ -1,200 +1,192 @@
 import 'dart:async';
+import 'dart:core';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind/models/meditationoptions.dart';
 
-class MeditationProvdier extends ChangeNotifier{
+class MeditationProvdier extends ChangeNotifier {
+  final List<Meditationoptions> _options = [
+    Meditationoptions(label: "1 min", value: Duration(minutes: 1)),
+    Meditationoptions(label: "5 min", value: Duration(minutes: 5)),
+    Meditationoptions(label: "10 min", value: Duration(minutes: 10)),
+    Meditationoptions(label: "15 min", value: Duration(minutes: 15)),
+    Meditationoptions(label: "20 min", value: Duration(minutes: 20)),
+    Meditationoptions(label: "25 min", value: Duration(minutes: 25)),
+    Meditationoptions(label: "30 min", value: Duration(minutes: 30)),
+    Meditationoptions(label: "45 min", value: Duration(minutes: 45)),
 
+    // Meditationoptions(label: "60 min", value: Duration(minutes: 60)),
+  ];
+  Meditationoptions? _selectedTime;
+  // late Duration _currentDuration;
 
-final List<Meditationoptions> _options=[
+  // Timer?_sedionTimer;
 
-  Meditationoptions(label: "1 min", value: Duration(minutes: 1)),
-  Meditationoptions(label: "5 min", value: Duration(minutes: 5)),
-  Meditationoptions(label: "10 min", value: Duration(minutes: 10)),
-  Meditationoptions(label: "15 min", value: Duration(minutes: 15)),
-  Meditationoptions(label: "20 min", value: Duration(minutes: 20)),
-  Meditationoptions(label: "25 min", value: Duration(minutes: 25)),
-  Meditationoptions(label: "30 min", value: Duration(minutes: 30)),
-  Meditationoptions(label: "45 min", value: Duration(minutes: 45)),
-  // Meditationoptions(label: "60 min", value: Duration(minutes: 60)),
+  // gettersMeditationoptions? _selectedTime;
+  late Duration _timer;
+  final Duration _currentDuration = Duration.zero;
+  late Duration _slidertime = Duration.zero;
+  // late Timer? _timer1;
+  bool _isPlaying = false;
+  late Timer _timer1;
+  late ConfettiController _confttieController;
+  late double _slider=0.0;
 
-];
-Meditationoptions? _selectedTime;
-// late Duration _currentDuration;
+  // getters
+  Meditationoptions? get selectedOption => _selectedTime;
+  List<Meditationoptions> get selectionOptions => _options;
+  Duration? get medTime => _timer;
+  bool get isPlaying => _isPlaying;
+  Duration get sliderTime => _slidertime;
+  ConfettiController get confettiController => _confttieController;
+  double get slider =>_slider;
 
-// Timer?_sedionTimer;
+  void playConfetti() {
+    _confttieController.play();
+    notifyListeners();
+  }
 
-// gettersMeditationoptions? _selectedTime;
-late Duration _timer;
-Duration _currentDuration=Duration.zero;
-late double _slidertime=0;
-// late Timer? _timer1;
-bool _isPlaying= false;
-late Timer _timer1;
-late ConfettiController _confttieController;
+  void stioConfetti() {
+    _confttieController.stop();
+    notifyListeners();
+  }
 
+  @override
+  void disposeConfettie() {
+    _confttieController.dispose();
+    super.dispose();
+  }
 
-// getters
-Meditationoptions? get selectedOption => _selectedTime;
-List<Meditationoptions> get selectionOptions=> _options;
-Duration? get medTime=> _timer;
-bool get isPlaying=> _isPlaying;
-double get sliderTime=> _slidertime;
-ConfettiController get confettiController=>_confttieController;
-
-
-void playConfetti(){
-  _confttieController.play();
-  notifyListeners();
-}
-void stioConfetti(){
-  _confttieController.stop();
-  notifyListeners();
-}@override
-void disposeConfettie(){
-  _confttieController.dispose();
-  super.dispose();
-}
-
-// setters
-void setSelectionOption(Meditationoptions options){
-  _selectedTime =options;
-_timer= _selectedTime!.value;
-_confttieController = ConfettiController(duration: const Duration(seconds: 2));
-
-
-  notifyListeners();
-}
-
-void setplaying(){
-  _isPlaying=true;
-  notifyListeners();
-}
-
-
-void settimer() {
-  if (medTime != null && _isPlaying ) {
-_slidertime=0;
-   _timer1= Timer.periodic(
-      calculateOnePercentDuration(medTime!),
-      (timer) {
-        _slidertime++;
-        notifyListeners();
-        print("timer started and renning $_slidertime");
-        if (_slidertime==2||_slidertime==98){
-          _triggeraudio();
-        }
-        if (_slidertime==100){
-medEnd();
-        }
-      },
+  // setters
+  void setSelectionOption(Meditationoptions options) {
+    _selectedTime = options;
+    _timer = _selectedTime!.value;
+    _confttieController = ConfettiController(
+      duration: const Duration(seconds: 2),
     );
-  }
-}
-@override
-void disposeTimer() {
-  _timer1?.cancel();
-  // _timer1 = null;
-  // super.dispose();
-}
-void medEnd(){
-  disposeTimer();
-  _isPlaying=false;
-Future.delayed(const Duration(seconds: 3),(){
-  _playUplifting();
-playConfetti();
-_playcrowd();
 
-});
-
-
-notifyListeners();
-
-}
-
-Duration calculateOnePercentDuration(Duration medTime) {
-  const int divisionFactor = 100;
-  final int totalSeconds = medTime.inSeconds;
-  final double resultInSeconds = totalSeconds / divisionFactor;
-  return Duration(milliseconds: (resultInSeconds * 1000).round());
-}
-late Duration actualTime;
-
-
-
-
-// audio player
-
-final AudioPlayer _audioplayer= AudioPlayer();
-
-
-void playAudio(){
-_audioplayer.setSourceAsset("audio/bell.mp3");
-
-}
-
-
-
-
-void play() async{
- _isPlaying =true;
- notifyListeners();
-}
-
-void pause() async{
-  _isPlaying=false;
-  notifyListeners();
+    notifyListeners();
   }
 
-  void skipTenForward(){
-
-medTime! + Duration(seconds: 10);
-print(medTime);
-notifyListeners();
-  }
-  void goTenBackwards(){
-medTime! + Duration(seconds: 10);
-print(medTime);
-
-notifyListeners();
+  void setplaying() {
+    _isPlaying = true;
+    notifyListeners();
   }
 
-
-void add30Sconds(){
-_timer! + Duration(seconds: 30);
-print("timer is $_timer");
-notifyListeners();
-
-
-}
-
-void remove30Sconds(){
-_timer! - Duration(seconds: 30);
-print("timer is $_timer");
-notifyListeners();
-
-
-}
-
-void pauseorplay(){
-  _isPlaying ? pause():play();
-}
-void provideEndTime(){
-
-}
-void _triggeraudio() async{
-
-  await _audioplayer.play(AssetSource("audio/bell.mp3"));
-
-
-}
-void _playUplifting()async{
-  await _audioplayer.play(AssetSource("audio/uplifting.mp3"));
-}
-void _playcrowd()async{
-  await _audioplayer.play(AssetSource("audio/crowd.mp3"));
-}
+ getSliderPosititon(){
+       notifyListeners();
        
+}
+  void settimer() {
+    _slidertime = Duration.zero;
+    _timer1 = Timer.periodic(const Duration(seconds: 1), (timer) {
+      _slidertime+=const Duration(seconds: 1);
+       _slider= _slidertime.inSeconds/_timer.inSeconds;
+
+      notifyListeners();
+      print("timer started and renning $_slidertime");
+      if(_slidertime == Duration(seconds: 3) || _timer .inSeconds-_slidertime.inSeconds==4 ) {
+        _triggeraudio();
+      }
+      if (_slidertime >= _timer) {
+        medEnd();
+      }
+    });
+  }
+
+  void sliterPM() {}
+
+  @override
+  void disposeTimer() {
+    _timer1.cancel();
+    // _timer1 = null;
+    // super.dispose();
+  }
+
+  void medEnd() {
+    disposeTimer();
+    _isPlaying = false;
+    Future.delayed(const Duration(seconds: 3), () {
+      _playUplifting();
+      playConfetti();
+      _playcrowd();
+    });
+
+    notifyListeners();
+  }
+
+  Duration calculateOnePercentDuration(Duration medTime) {
+    const int divisionFactor = 100;
+    final int totalSeconds = _timer.inSeconds;
+    final double resultInSeconds = totalSeconds / divisionFactor;
+    return Duration(milliseconds: (resultInSeconds * 1000).round());
+  }
+
+  late Duration actualTime;
+
+  // audio player
+
+  final AudioPlayer _audioplayer = AudioPlayer();
+
+  void playAudio() {
+    _audioplayer.setSourceAsset("audio/bell.mp3");
+  }
+
+  void play() async {
+    _isPlaying = true;
+    notifyListeners();
+  }
+
+  void pause() async {
+    _isPlaying = false;
+    notifyListeners();
+  }
+
+  void skipTenForward() {
+  _slidertime = _slidertime+ const Duration(seconds: 10);
+    print(medTime);
+    notifyListeners();
+  }
+
+  void goTenBackwards() {
+    _slidertime=_slidertime - const Duration(seconds: 10);
+    print(medTime);
+
+    notifyListeners();
+  }
+
+  void add30Sconds() {
+    _timer = _timer + const Duration(seconds: 30);
+    print("timer is $_timer");
+    notifyListeners();
+  }
+
+  void remove30Sconds() {
+    _timer = _timer - const Duration(seconds: 30);
+    print("timer is $_timer");
+    notifyListeners();
+  }
+
+  void pauseorplay() {
+    _isPlaying ? pause() : play();
+  }
+
+void _triggeraudio() async {
+  try {
+    await _audioplayer.stop(); // stop any current play
+    await _audioplayer.play(AssetSource("audio/bell.mp3"));
+  } catch (e) {
+    print("Audio play error: $e");
+  }
+}
+
+  void _playUplifting() async {
+    await _audioplayer.play(AssetSource("audio/uplifting.mp3"));
+  }
+
+  void _playcrowd() async {
+    await _audioplayer.play(AssetSource("audio/crowd.mp3"));
+  }
 }

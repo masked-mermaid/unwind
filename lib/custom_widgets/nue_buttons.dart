@@ -21,7 +21,7 @@ class NueButtons extends StatelessWidget {
         margin: EdgeInsets.only(right: 18),
         decoration: BoxDecoration(
           
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(24),
           color: 
           // Colors.grey.shade400,
           Theme.of(context).colorScheme.surface,
