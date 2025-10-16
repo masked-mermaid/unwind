@@ -83,6 +83,7 @@ class MeditationProvdier extends ChangeNotifier {
 }
   void settimer() {
     _slidertime = Duration.zero;
+    _buttonsActive= true;
     _timer1 = Timer.periodic(const Duration(seconds: 1), (timer) {
       _slidertime+=const Duration(seconds: 1);
        _slider= _slidertime.inSeconds/_timer.inSeconds;
