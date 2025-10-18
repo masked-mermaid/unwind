@@ -15,7 +15,7 @@ class MeditationProvdier extends ChangeNotifier {
     Meditationoptions(label: "20 min", value: Duration(minutes: 20)),
     Meditationoptions(label: "25 min", value: Duration(minutes: 25)),
     Meditationoptions(label: "30 min", value: Duration(minutes: 30)),
-    Meditationoptions(label: "45 min", value: Duration(minutes: 45)),
+    Meditationoptions(label: "60 min", value: Duration(minutes: 60)),
 
     // Meditationoptions(label: "60 min", value: Duration(minutes: 60)),
   ];
