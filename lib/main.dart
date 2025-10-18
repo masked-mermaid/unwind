@@ -7,6 +7,7 @@ import 'package:unwind/boxes.dart';
 import 'package:unwind/models/quotes.dart';
 import 'package:unwind/pages/homepage.dart';
 import 'package:unwind/provider/meditation_provider.dart';
+import 'package:unwind/provider/quotes_provider.dart';
 import 'package:unwind/theme/theme_provider.dart';
 
 
@@ -23,7 +24,9 @@ Future <void> main() async {
 
   runApp(MultiProvider(providers: [
 ChangeNotifierProvider(create: (context)=>ThemeProvider()),
-ChangeNotifierProvider(create: (context)=>MeditationProvdier())
+ChangeNotifierProvider(create: (context)=>MeditationProvdier()),
+ ChangeNotifierProvider(create:(context)=>QuotesProvider())
+ 
     ],
     child: const MyApp(),));
 }

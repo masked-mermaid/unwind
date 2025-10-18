@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_inner_shadow/flutter_inner_shadow.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:provider/provider.dart';
+import 'package:unwind/boxes.dart';
 import 'package:unwind/custom_widgets/nue_box.dart';
 import 'package:unwind/custom_widgets/nue_buttons.dart';
+import 'package:unwind/data/quotes/get_quotes.dart';
 // import 'package:unwind/models/meditationoptions.dart';
 import 'package:unwind/pages/meditationpage.dart';
 import 'package:unwind/provider/meditation_provider.dart';
+import 'package:unwind/provider/quotes_provider.dart';
 
 
 class Homepage extends StatelessWidget {
@@ -15,6 +19,8 @@ class Homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final optionLists = Provider.of<MeditationProvdier>(context);
+    final quotesdata =Provider.of<QuotesProvider>(context);
+    
     // final  box =await Hive.openBox<Quotes>('quotesbox');
 
     return Consumer(
@@ -89,20 +95,59 @@ class Homepage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(
-                    'Welcome Back, Jake',
-                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-                  ),
+                 Text(
+                 'Welcome Back, Jake',
+                 style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                                   ),
                   // SizedBox(height: 24,),
-                  NeuBox(
-                    child: SizedBox(
-                      height: 100,
-                      width: 340,
-                      child: Text(
-                        '"Lack of emotion causes lack of progress \n and lack of motivation \n \n \n \t\t\t\t-Tony Robbins',
+                   GestureDetector(
+                    onTap: () {
+                      Clipboard.setData(ClipboardData(text:" ${box.getAt(quotesdata.quoteIndex)?.quote} \n- ${box.getAt(quotesdata.quoteIndex)?.author}"));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Quote copied to clipboard"),
+                          action: SnackBarAction(
+                            label: 'OK',
+                            onPressed: () {
+                              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                            },
+                          ),
+                        ),
+                      );
+                    },
+                     child: NeuBox(
+                        child: SizedBox(
+                            height: 100,
+                            width: 340,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                // '"Lack of emotion causes lack of progress \n and lack of motivation \n \n \n \t\t\t\t-Tony Robbins',
+                                                         " '' ${box.getAt(quotesdata.quoteIndex)?.quote} ''",style: TextStyle(
+                                fontSize: 16
+                              ),),
+                            ),
+                            
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                width: 300,
+                                child: Text(
+                                    "${box.getAt(quotesdata.quoteIndex)?.author} - ",
+                                    textDirection:TextDirection.rtl ,style: TextStyle(
+                                fontSize: 16
+                              )
+                                ),
+                              ),
+                            )
+                            ]
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
+                   ),
+                  
                   // SizedBox(height: 250,),
                   // timeButtons(),
                   Container(
@@ -185,36 +230,6 @@ class Homepage extends StatelessWidget {
               ),
             ),
           ),
-    );
-  }
-
-  Row timeButtons() {
-    return Row(
-      // mainAxisAlignment: MainAxisAlignment.spaceAround,
-      // children: [
-      //   NueButtons(child: Text('5 min'), ),
-      //   NueButtons(child: Text('10min')),
-      //   NueButtons(
-      //     child: Text('15 min'),
-      //   ),
-      //   NueButtons(
-      //     child: DropdownButton(
-      //       padding:EdgeInsets.all(0) ,
-
-      //       hint: const Text("Custom"),
-      //       items:
-      //           ['30min', '45min', '60min']
-      //               .map(
-      //                 (time) => DropdownMenuItem(
-      //                   value: time,
-      //                   child: Text(time),
-      //                 ),
-      //               )
-      //               .toList(),
-      //       onChanged: (value) {},
-      //     ),
-      //   ),
-      // ],
     );
   }
 }

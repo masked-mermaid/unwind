@@ -89,7 +89,7 @@ class MeditationProvdier extends ChangeNotifier {
        _slider= (_slidertime.inSeconds/_timer.inSeconds)*100;
 
       notifyListeners();
-      print("timer started and renning $_slidertime");
+      print("timer started, rn its $_slidertime");
       if(_slidertime == Duration(seconds: 3) || _timer .inSeconds-_slidertime.inSeconds==4 ) {
         _triggeraudio();
       }
@@ -100,23 +100,27 @@ class MeditationProvdier extends ChangeNotifier {
       }
     });
   }
-
-  void sliterPM() {}
-
   @override
-  void disposeTimer() {
-    _timer1.cancel();
-    // _timer1 = null;
-    // super.dispose();
-  }
+void dispose() {
+  _timer1.cancel();
+  // _audioplayer.dispose();
+  // _confttieController.dispose();
+  // super.dispose();
+}
 
-  void medEnd() {
-    disposeTimer();
+
+
+  
+  void medEnd(){
+   _timer1.cancel();
     _isPlaying = false;
-    Future.delayed(const Duration(seconds: 3), () {
-      _playUplifting();
+     _playUplifting();
       playConfetti();
       _playcrowd();
+    Future.delayed(const Duration(seconds: 3), () async {
+     
+//  dispose();
+
     });
 
     notifyListeners();
@@ -150,8 +154,10 @@ class MeditationProvdier extends ChangeNotifier {
   }
 
   void skipTenForward() {
-  _slidertime = _slidertime+ const Duration(seconds: 10);
-    print(medTime);
+    if (_slidertime +const Duration(seconds: 10)<_timer) {
+    _slidertime=_slidertime + const Duration(seconds: 10);}
+
+
     notifyListeners();
   }
 
@@ -159,14 +165,12 @@ class MeditationProvdier extends ChangeNotifier {
     if (_slidertime - const Duration(seconds: 10)>Duration(seconds: 1)) {
     _slidertime=_slidertime - const Duration(seconds: 10);}
 
-    print(medTime);
 
     notifyListeners();
   }
 
   void add30Sconds() {
     _timer = _timer + const Duration(seconds: 30);
-    print("timer is $_timer");
     notifyListeners();
   }
 
@@ -174,7 +178,6 @@ class MeditationProvdier extends ChangeNotifier {
     if (_timer - const Duration(seconds: 30)>_slidertime) {
 
     _timer = _timer - const Duration(seconds: 30);}
-    print("timer is $_timer");
     notifyListeners();
   }
 

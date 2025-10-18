@@ -16,10 +16,6 @@ import 'package:hive/hive.dart';
       final  box =await Hive.openBox<Quotes>('quotesbox'); 
       await box.clear();
 
-      // for (var item in data){
-      //   final quote= Quotes(quote: item["q"], author: item["a"], characterCount: item["c"]);
-      //   await box.add(quote)};
-
       final quotes = data.map((item){
         return Quotes(quote: item["q"],
          author: item["a"],
@@ -33,12 +29,7 @@ import 'package:hive/hive.dart';
 
 
     }
-    void main() async{
-     await fetchAndSaveQuotes();
-      print("Data fetching complete!");
-      
-    }
-
+    
 
 
 

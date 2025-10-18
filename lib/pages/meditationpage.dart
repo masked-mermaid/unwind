@@ -1,6 +1,7 @@
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:unwind/custom_widgets/nue_box.dart';
 import 'package:unwind/provider/meditation_provider.dart';
@@ -32,15 +33,15 @@ class Meditationpage extends StatelessWidget {
                   Stack(
                     children: [
                       // Lottie.asset('assets/lottie/Meditating Fox.json',height: 250),
-                      // Lottie.asset(
-                      //   'assets/lottie/Wave Animation.json',
-                      //   height: 250,
-                      // ),
-                      // Lottie.asset(
-                      //   'assets/lottie/Meditating Rabbit.json',
-                      //   height: 250,
-                      //   frameRate: FrameRate(0.2),
-                      // ),
+                      Lottie.asset(
+                        'assets/lottie/Wave Animation.json',
+                        height: 250,
+                      ),
+                      Lottie.asset(
+                        'assets/lottie/Meditating Rabbit.json',
+                        height: 250,
+                        frameRate: FrameRate(0.2),
+                      ),
                     ],
                   ),
 
@@ -144,6 +145,7 @@ class Meditationpage extends StatelessWidget {
                             GestureDetector(
                               onTap: () {
                                 Navigator.pop(context);
+                                value.dispose();
                               },
                               child: HugeIcon(
                                 icon: HugeIcons.strokeRoundedCancelSquare,
