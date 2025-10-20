@@ -16,7 +16,6 @@ class QuotesProvider extends ChangeNotifier {
   int get quoteIndex=> _quoteIndex;
 
   void isIt6Hours(){
-
     // Initialize _previousUpdate if it's null
     _previousUpdate ??= _now;
 

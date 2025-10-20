@@ -43,6 +43,7 @@ dependencies:
   http: ^1.5.0
   audioplayers: ^6.5.1
   confetti: ^0.8.0
+  flutter_launcher_icons: ^0.14.4
 
 
 dev_dependencies:
@@ -99,3 +100,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/applogo/11.png" # Path to your icon image
+      # min_sdk_android: 21 # Minimum Android SDK version

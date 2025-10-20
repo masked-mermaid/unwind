@@ -12,15 +12,14 @@ import 'package:unwind/pages/meditationpage.dart';
 import 'package:unwind/provider/meditation_provider.dart';
 import 'package:unwind/provider/quotes_provider.dart';
 
-
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final optionLists = Provider.of<MeditationProvdier>(context);
-    final quotesdata =Provider.of<QuotesProvider>(context);
-    
+    final quotesdata = Provider.of<QuotesProvider>(context);
+
     // final  box =await Hive.openBox<Quotes>('quotesbox');
 
     return Consumer(
@@ -95,59 +94,66 @@ class Homepage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                 Text(
-                 'Welcome Back, Jake',
-                 style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-                                   ),
+                  Text(
+                    'Welcome Back, Jake',
+                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                  ),
                   // SizedBox(height: 24,),
-                   GestureDetector(
+                  GestureDetector(
                     onTap: () {
-                      Clipboard.setData(ClipboardData(text:" ${box.getAt(quotesdata.quoteIndex)?.quote} \n- ${box.getAt(quotesdata.quoteIndex)?.author}"));
+                      Clipboard.setData(
+                        ClipboardData(
+                          text:
+                              " ${box.getAt(quotesdata.quoteIndex)?.quote} \n- ${box.getAt(quotesdata.quoteIndex)?.author}",
+                        ),
+                      );
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text("Quote copied to clipboard"),
                           action: SnackBarAction(
                             label: 'OK',
                             onPressed: () {
-                              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                              ScaffoldMessenger.of(
+                                context,
+                              ).hideCurrentSnackBar();
                             },
                           ),
                         ),
                       );
                     },
-                     child: NeuBox(
-                        child: SizedBox(
-                            height: 100,
-                            width: 340,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [Padding(
+                    child: NeuBox(
+                      child: SizedBox(
+                        height: 100,
+                        width: 340,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
                                 // '"Lack of emotion causes lack of progress \n and lack of motivation \n \n \n \t\t\t\t-Tony Robbins',
-                                                         " '' ${box.getAt(quotesdata.quoteIndex)?.quote} ''",style: TextStyle(
-                                fontSize: 16
-                              ),),
+                                " '' ${box.getAt(quotesdata.quoteIndex)?.quote} ''",
+                                style: TextStyle(fontSize: 16),
+                              ),
                             ),
-                            
+
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: SizedBox(
                                 width: 300,
                                 child: Text(
-                                    "${box.getAt(quotesdata.quoteIndex)?.author} - ",
-                                    textDirection:TextDirection.rtl ,style: TextStyle(
-                                fontSize: 16
-                              )
+                                  "${box.getAt(quotesdata.quoteIndex)?.author} - ",
+                                  textDirection: TextDirection.rtl,
+                                  style: TextStyle(fontSize: 16),
                                 ),
                               ),
-                            )
-                            ]
-                          ),
+                            ),
+                          ],
                         ),
                       ),
-                   ),
-                  
+                    ),
+                  ),
+
                   // SizedBox(height: 250,),
                   // timeButtons(),
                   Container(
@@ -198,12 +204,10 @@ class Homepage extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => Meditationpage(),
-                            
                           ),
                         );
                         optionLists.setplaying();
                         optionLists.settimer();
-
                       }
                     },
                     child: NeuBox(

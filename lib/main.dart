@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:unwind/boxes.dart';
+import 'package:unwind/data/quotes/get_quotes.dart';
 import 'package:unwind/models/quotes.dart';
 import 'package:unwind/pages/homepage.dart';
 import 'package:unwind/provider/meditation_provider.dart';
@@ -20,6 +21,8 @@ Future <void> main() async {
 
   //  init box
   box =await Hive.openBox<Quotes>('quotesbox'); 
+fetchAndSaveQuotes();
+
 
 
   runApp(MultiProvider(providers: [
