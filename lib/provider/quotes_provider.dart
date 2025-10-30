@@ -15,7 +15,7 @@ class QuotesProvider extends ChangeNotifier {
   Quotes? get currentQuote => _currentQuote;
   int get quoteIndex=> _quoteIndex;
 
-  void isIt6Hours(){
+      void isIt6Hours(){
     // Initialize _previousUpdate if it's null
     _previousUpdate ??= _now;
 
@@ -25,10 +25,13 @@ class QuotesProvider extends ChangeNotifier {
       (_quoteIndex%50)+1;
       _previousUpdate = _now;
       notifyListeners();
-    }
-  }
-
-
+      if (_quoteIndex>=45){
+        fetchAndSaveQuotes();
+      }
+    } 
+      // void setUserName(){
+      // await prefs.setString('username','$name'); 
+      }
 
   Future <void> fetchAndSaveQuotes () async {
 
@@ -37,7 +40,7 @@ class QuotesProvider extends ChangeNotifier {
     if(response.statusCode==200){
       final List data = json.decode(response.body);
 
-// init box
+      // init box
       final  box =await Hive.openBox<Quotes>('quotesbox'); 
 
       // write to box
@@ -56,5 +59,6 @@ class QuotesProvider extends ChangeNotifier {
     }else {throw Exception("failed to fetch quotes");}
 
 
+     }
     }
-}
+  

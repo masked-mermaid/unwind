@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:core';
 
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,9 @@ class MeditationProvdier extends ChangeNotifier {
   late ConfettiController _confttieController;
   late double _slider=0.0;
   bool _buttonsActive= true;
+  int? _streakCount;
+  static const _streak=false;
+  DateTime? _lastmed;
 
   // getters
   Meditationoptions? get selectedOption => _selectedTime;
@@ -44,6 +48,8 @@ class MeditationProvdier extends ChangeNotifier {
   ConfettiController get confettiController => _confttieController;
   double get slider =>_slider;
   bool get btn=>_buttonsActive;
+  bool get streak=>_streak;
+  int? get streakCount =>_streakCount;
 
   void playConfetti() {
     _confttieController.play();
@@ -60,7 +66,10 @@ class MeditationProvdier extends ChangeNotifier {
     _confttieController.dispose();
     super.dispose();
   }
+void changeStreak(){
 
+  
+}
   // setters
   void setSelectionOption(Meditationoptions options) {
     _selectedTime = options;
@@ -111,17 +120,13 @@ void dispose() {
 
 
   
-  void medEnd(){
+  void medEnd()async{
    _timer1.cancel();
     _isPlaying = false;
      _playUplifting();
       playConfetti();
       _playcrowd();
-    Future.delayed(const Duration(seconds: 3), () async {
-     
-//  dispose();
-
-    });
+    //  await prefs.setString('medCompletion','$DateTime.now')
 
     notifyListeners();
   }
@@ -202,3 +207,6 @@ void _triggeraudio() async {
     await _audioplayer.play(AssetSource("audio/crowd.mp3"));
   }
 }
+// void _streak()async{
+// await /prefs.setString
+// }

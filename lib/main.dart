@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:unwind/boxes.dart';
 import 'package:unwind/data/quotes/get_quotes.dart';
 import 'package:unwind/models/quotes.dart';
@@ -11,8 +12,9 @@ import 'package:unwind/provider/meditation_provider.dart';
 import 'package:unwind/provider/quotes_provider.dart';
 import 'package:unwind/theme/theme_provider.dart';
 
-
 Future <void> main() async {
+WidgetsFlutterBinding.ensureInitialized();
+
   // init hive
   await Hive.initFlutter();
 

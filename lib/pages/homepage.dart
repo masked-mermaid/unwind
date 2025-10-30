@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_inner_shadow/flutter_inner_shadow.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:unwind/boxes.dart';
 import 'package:unwind/custom_widgets/nue_box.dart';
@@ -34,6 +34,7 @@ class Homepage extends StatelessWidget {
             ),
 
             appBar: AppBar(
+              forceMaterialTransparency: false,
               shadowColor: Colors.transparent,
               // actionsPadding: EdgeInsets.only(left: 24),
               backgroundColor:
@@ -42,42 +43,47 @@ class Homepage extends StatelessWidget {
               actions: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: InnerShadow(
-                    shadows: [
-                      Shadow(
-                        color: Theme.of(context).colorScheme.tertiary,
-                        blurRadius: 4,
-                        offset: Offset(4, 4),
-                      ),
-                      Shadow(
-                        color: Theme.of(context).colorScheme.secondaryContainer,
-                        blurRadius: 4,
-                        offset: Offset(-4, -4),
-                      ),
-                    ],
-                    child: Container(
-                      // height: 30,
-                      width: 68,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surface,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          HugeIcon(
-                            icon: HugeIcons.strokeRoundedFire03,
-                            color: Colors.black54,
+                  child: Container(
+                    // height: 30,
+                    width: 70,
+                    decoration: BoxDecoration(
+                      border: optionLists.streak? Border.all(
+                        width: 2,
+                        color: Colors.deepPurpleAccent
+                      ): null,
+                      color: Theme.of(context).colorScheme.onSurface,
+                      // color: Colors.grey.shade600,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                                      
+                        
+                                      
+                      optionLists.streak?
+                      Lottie.asset(
+                        'assets/lottie/Streak Fire.json',
+                        height: 52, 
+                        backgroundLoading: true,
+                      )
+                                      
+                      :  HugeIcon(
+                          icon: HugeIcons.strokeRoundedFire03,
+                          color: Colors.grey,
+                        ),
+                        Text(
+                          '3',
+                          style: TextStyle(
+                            fontSize: optionLists.streak?24:18,
+                            // fontWeight: FontWeight.bold,
+                            color:
+                                Theme.of(context).colorScheme.inversePrimary,
+                                // Colors.white
                           ),
-                          Text(
-                            '3',
-                            style: TextStyle(
-                              color:
-                                  Theme.of(context).colorScheme.inversePrimary,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

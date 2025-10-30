@@ -8,7 +8,8 @@ ThemeData darkMode = ThemeData(
     secondary: Colors.grey.shade800,
     inversePrimary: Colors.grey.shade300,
     tertiary: Colors.black54,
-    secondaryContainer: Colors.grey.shade700
+    secondaryContainer: Colors.grey.shade700,
+    onSurface:Colors.grey.shade700
     
   )
 
