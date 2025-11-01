@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:core';
 
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
@@ -21,23 +19,13 @@ class MeditationProvider extends ChangeNotifier {
     // Meditationoptions(label: "60 min", value: Duration(minutes: 60)),
   ];
   Meditationoptions? _selectedTime;
-  // late Duration _currentDuration;
-
-  // Timer?_sedionTimer;
-
-  // gettersMeditationoptions? _selectedTime;
   late Duration _timer;
-  final Duration _currentDuration = Duration.zero;
   late Duration _slidertime = Duration.zero;
-  // late Timer? _timer1;
   bool _isPlaying = false;
-  late Timer _timer1;
-  late ConfettiController _confttieController;
-  late double _slider=0.0;
-  bool _buttonsActive= true;
-  int? _streakCount;
-  static const _streak=false;
-  DateTime? _lastmed;
+  Timer? _timer1;
+  ConfettiController? _confettiController;
+  double _slider = 0.0;
+  bool _buttonsActive = true;
 
   // getters
   Meditationoptions? get selectedOption => _selectedTime;
@@ -45,36 +33,29 @@ class MeditationProvider extends ChangeNotifier {
   Duration? get medTime => _timer;
   bool get isPlaying => _isPlaying;
   Duration get sliderTime => _slidertime;
-  ConfettiController get confettiController => _confttieController;
-  double get slider =>_slider;
-  bool get btn=>_buttonsActive;
-  bool get streak=>_streak;
-  int? get streakCount =>_streakCount;
+  ConfettiController? get confettiController => _confettiController;
+  double get slider => _slider;
+  bool get btn => _buttonsActive;
 
   void playConfetti() {
-    _confttieController.play();
+    _confettiController?.play();
     notifyListeners();
   }
 
-  void stioConfetti() {
-    _confttieController.stop();
+  void stopConfetti() {
+    _confettiController?.stop();
     notifyListeners();
   }
 
-  @override
-  void disposeConfettie() {
-    _confttieController.dispose();
-    super.dispose();
+  void disposeConfetti() {
+    _confettiController?.dispose();
+    _confettiController = null;
   }
-void changeStreak(){
-
-  
-}
   // setters
   void setSelectionOption(Meditationoptions options) {
     _selectedTime = options;
     _timer = _selectedTime!.value;
-    _confttieController = ConfettiController(
+    _confettiController = ConfettiController(
       duration: const Duration(seconds: 2),
     );
 
@@ -86,16 +67,17 @@ void changeStreak(){
     notifyListeners();
   }
 
- getSliderPosititon(){
-       notifyListeners();
-       
-}
   void settimer() {
+    if (_timer1?.isActive ?? false) return;
+    
     _slidertime = Duration.zero;
-    _buttonsActive= true;
+    _buttonsActive = true;
+    
+    if (_timer.inSeconds == 0) return;
+    
     _timer1 = Timer.periodic(const Duration(seconds: 1), (timer) {
-      _slidertime+=const Duration(seconds: 1);
-       _slider= (_slidertime.inSeconds/_timer.inSeconds)*100;
+      _slidertime += const Duration(seconds: 1);
+      _slider = (_slidertime.inSeconds / _timer.inSeconds) * 100;
 
       notifyListeners();
       print("timer started, rn its $_slidertime");
@@ -109,25 +91,43 @@ void changeStreak(){
       }
     });
   }
+    void stopSession() {
+    _timer1?.cancel();
+    _timer1 = null;
+    _isPlaying = false;
+    _buttonsActive = true;
+    _slidertime = Duration.zero;
+    _slider = 0.0;
+    notifyListeners();
+  }
+
   @override
-void dispose() {
-  _timer1.cancel();
-  // _audioplayer.dispose();
-  // _confttieController.dispose();
-  // super.dispose();
-}
+  void dispose() {
+    _timer1?.cancel();
+    _audioplayer.dispose();
+    disposeConfetti();
+    super.dispose();
+  }
 
 
 
   
-  void medEnd()async{
-   _timer1.cancel();
+  void medEnd() async {
+    _timer1?.cancel();
+    _timer1 = null;
     _isPlaying = false;
-     _playUplifting();
-      playConfetti();
-      _playcrowd();
-    //  await prefs.setString('medCompletion','$DateTime.now')
-
+    
+    // Play sounds in sequence
+    try {
+      await _audioplayer.stop();
+      await _audioplayer.play(AssetSource("audio/uplifting.mp3"));
+      await Future.delayed(const Duration(milliseconds: 500));
+      await _audioplayer.play(AssetSource("audio/crowd.mp3"));
+    } catch (e) {
+      print("Audio play error in medEnd: $e");
+    }
+    
+    playConfetti();
     notifyListeners();
   }
 
@@ -138,8 +138,6 @@ void dispose() {
     return Duration(milliseconds: (resultInSeconds * 1000).round());
   }
 
-  late Duration actualTime;
-
   // audio player
 
   final AudioPlayer _audioplayer = AudioPlayer();
@@ -148,38 +146,38 @@ void dispose() {
     _audioplayer.setSourceAsset("audio/bell.mp3");
   }
 
-  void play() async {
+  void play() {
     _isPlaying = true;
+    settimer();
     notifyListeners();
   }
 
-  void pause() async {
+  void pause() {
     _isPlaying = false;
+    _timer1?.cancel();
     notifyListeners();
   }
 
   void skipTenForward() {
-    if (_slidertime +const Duration(seconds: 10)<_timer) {
-    _slidertime=_slidertime + const Duration(seconds: 10);}
-
-
-    notifyListeners();
+    if (_slidertime + const Duration(seconds: 10) < _timer) {
+      _slidertime = _slidertime + const Duration(seconds: 10);
+      notifyListeners();
+    }
   }
 
   void goTenBackwards() {
-    if (_slidertime - const Duration(seconds: 10)>Duration(seconds: 1)) {
-    _slidertime=_slidertime - const Duration(seconds: 10);}
-
-
-    notifyListeners();
+    if (_slidertime - const Duration(seconds: 10) > Duration(seconds: 1)) {
+      _slidertime = _slidertime - const Duration(seconds: 10);
+      notifyListeners();
+    }
   }
 
-  void add30Sconds() {
+  void add30Seconds() {
     _timer = _timer + const Duration(seconds: 30);
     notifyListeners();
   }
 
-  void remove30Sconds() {
+  void remove30Seconds() {
     if (_timer - const Duration(seconds: 30)>_slidertime) {
 
     _timer = _timer - const Duration(seconds: 30);}
@@ -199,13 +197,6 @@ void _triggeraudio() async {
   }
 }
 
-  void _playUplifting() async {
-    await _audioplayer.play(AssetSource("audio/uplifting.mp3"));
-  }
-
-  void _playcrowd() async {
-    await _audioplayer.play(AssetSource("audio/crowd.mp3"));
-  }
 }
 // void _streak()async{
 // await /prefs.setString

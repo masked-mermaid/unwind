@@ -143,9 +143,9 @@ class Meditationpage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             GestureDetector(
-                              onTap: () {
+                            onTap: () {
+                                value.stopSession();
                                 Navigator.pop(context);
-                                // value.dispose();
                               },
                               child: HugeIcon(
                                 icon: HugeIcons.strokeRoundedCancelSquare,
@@ -153,8 +153,8 @@ class Meditationpage extends StatelessWidget {
                               ),
                             ),
                             GestureDetector(
-                              onTap: value.btn?() {
-                                value.add30Sconds();
+                              onTap: value.btn ? () {
+                                value.add30Seconds();
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
@@ -169,8 +169,8 @@ class Meditationpage extends StatelessWidget {
                               ),
                             ),
                             GestureDetector(
-                              onTap:value.btn? () {
-                                value.add30Sconds();
+                              onTap: value.btn ? () {
+                                value.add30Seconds();
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(

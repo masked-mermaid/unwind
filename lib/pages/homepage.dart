@@ -209,11 +209,11 @@ class Homepage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Meditationpage(),
+                            builder: (context) => const Meditationpage(),
                           ),
                         );
-                        optionLists.setplaying();
-                        optionLists.settimer();
+                        // Play will also start the timer
+                        optionLists.play();
                       }
                     },
                     child: NeuBox(
