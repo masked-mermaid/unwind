@@ -11,7 +11,7 @@ class Meditationpage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MeditationProvdier>(
+    return Consumer<MeditationProvider>(
       builder: (context, value, child) {
         String formatTime(Duration duration) {
           String twoDigitSeconds = duration.inSeconds
@@ -80,7 +80,7 @@ class Meditationpage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(formatTime(value.sliderTime)),
-                        Text(formatTime(value.medTime!)),
+                        Text(formatTime(value.medTime?? Duration.zero)),
                       ],
                     ),
                   ),
@@ -145,7 +145,7 @@ class Meditationpage extends StatelessWidget {
                             GestureDetector(
                               onTap: () {
                                 Navigator.pop(context);
-                                value.dispose();
+                                // value.dispose();
                               },
                               child: HugeIcon(
                                 icon: HugeIcons.strokeRoundedCancelSquare,

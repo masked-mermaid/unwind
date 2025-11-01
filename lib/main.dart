@@ -29,7 +29,7 @@ fetchAndSaveQuotes();
 
   runApp(MultiProvider(providers: [
 ChangeNotifierProvider(create: (context)=>ThemeProvider()),
-ChangeNotifierProvider(create: (context)=>MeditationProvdier()),
+ChangeNotifierProvider(create: (context)=>MeditationProvider()),
  ChangeNotifierProvider(create:(context)=>QuotesProvider())
  
     ],

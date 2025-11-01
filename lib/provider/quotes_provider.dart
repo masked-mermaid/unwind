@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
+import 'package:unwind/boxes.dart';
 import 'package:unwind/models/quotes.dart';
 import 'dart:convert';
 
 
 class QuotesProvider extends ChangeNotifier {
-  late Box<Quotes> _quotesBox;
+  late final Box _quotesBox =box;
   Quotes? _currentQuote;
-  DateTime _now = DateTime.now();
+  final DateTime _now = DateTime.now();
   DateTime? _previousUpdate;
   int _quoteIndex=0;
 
@@ -22,7 +23,7 @@ class QuotesProvider extends ChangeNotifier {
     // check if at least 6 hours have passed since last update
     if (_now.difference(_previousUpdate!).inHours >= 6) {
       // perform update actions here, e.g. fetchAndSaveQuotes();
-      (_quoteIndex%50)+1;
+      _quoteIndex= (_quoteIndex%50)+1;
       _previousUpdate = _now;
       notifyListeners();
       if (_quoteIndex>=45){
@@ -41,19 +42,19 @@ class QuotesProvider extends ChangeNotifier {
       final List data = json.decode(response.body);
 
       // init box
-      final  box =await Hive.openBox<Quotes>('quotesbox'); 
 
       // write to box
-      await box.clear();
+      await _quotesBox.clear();
 
       final quotes = data.map((item){
         return Quotes(quote: item["q"],
          author: item["a"],
          characterCount: int.tryParse(item["c"]?? "0")??0);
       }).toList();
-      await box.addAll(quotes);
       quotes.sort((a, b) => a.characterCount.compareTo(b.characterCount),);
-      print('box length = ${box.length}');
+
+      await _quotesBox.addAll(quotes);
+      print('box length = ${_quotesBox.length}');
       
       
     }else {throw Exception("failed to fetch quotes");}

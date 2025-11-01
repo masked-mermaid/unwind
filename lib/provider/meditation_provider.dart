@@ -7,7 +7,7 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind/models/meditationoptions.dart';
 
-class MeditationProvdier extends ChangeNotifier {
+class MeditationProvider extends ChangeNotifier {
   final List<Meditationoptions> _options = [
     Meditationoptions(label: "1 min", value: Duration(minutes: 1)),
     Meditationoptions(label: "5 min", value: Duration(minutes: 5)),

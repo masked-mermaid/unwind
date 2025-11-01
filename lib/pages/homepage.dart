@@ -17,7 +17,7 @@ class Homepage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final optionLists = Provider.of<MeditationProvdier>(context);
+    final optionLists = Provider.of<MeditationProvider>(context);
     final quotesdata = Provider.of<QuotesProvider>(context);
 
     // final  box =await Hive.openBox<Quotes>('quotesbox');
