@@ -91,9 +91,9 @@ class Meditationpage extends StatelessWidget {
                       children: [
                         SizedBox(width: 60),
                         GestureDetector(
-                          onTap: value.btn? () {
+                          onTap: value.btn ? () {
                             value.goTenBackwards();
-                          }:null,
+                          } : null,
                           child: NeuBox(
                             child: HugeIcon(
                               icon: HugeIcons.strokeRoundedGoBackward10Sec,
@@ -102,13 +102,13 @@ class Meditationpage extends StatelessWidget {
                           ),
                         ),
                         GestureDetector(
-                          onTap:value.btn? () {
+                          onTap: value.btn ? () {
                             if (value.isPlaying) {
                               value.pause();
                             } else {
                               value.play();
                             }
-                          }:null,
+                          } : null,
                           child: HugeIcon(
                             icon:
                                 value.isPlaying
@@ -118,9 +118,9 @@ class Meditationpage extends StatelessWidget {
                           ),
                         ),
                         GestureDetector(
-                          onTap:value.btn? () {
+                          onTap: value.btn ? () {
                             value.skipTenForward();
-                          }:null,
+                          } : null,
                           child: NeuBox(
                             child: HugeIcon(
                               icon: HugeIcons.strokeRoundedGoForward10Sec,
@@ -154,9 +154,8 @@ class Meditationpage extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: value.btn ? () {
-                                value.add30Seconds();
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
+                                  const SnackBar(
                                     content: Text(
                                       "Background music feature currently under development",
                                     ),
@@ -194,14 +193,14 @@ class Meditationpage extends StatelessWidget {
                               ),
                             ),
                             GestureDetector(
-                              onTap:value.btn?() {
-                                value.remove30Sconds();
+                              onTap: value.btn ? () {
+                                value.remove30Seconds();
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
                                       "removed 30 seconds from the timer",
                                     ),
-                                    duration: Duration(milliseconds: 500),
+                                    duration: const Duration(milliseconds: 500),
                                     action: SnackBarAction(
                                       label: "OK",
                                       onPressed: () {
@@ -228,36 +227,38 @@ class Meditationpage extends StatelessWidget {
               ),
             ),
 
-            Positioned(
-              top: 0,
-              left: 0,
-              child: ConfettiWidget(
-                confettiController: value.confettiController,
-                blastDirectionality: BlastDirectionality.directional,
-                blastDirection: 3.14 / 4, // 45 degrees toward bottom-right
-                maxBlastForce: 20,
-                minBlastForce: 10,
-                emissionFrequency: 0.05,
-                numberOfParticles: 50,
-                gravity: 0.1,
+            if (value.confettiController != null) ...[
+              Positioned(
+                top: 0,
+                left: 0,
+                child: ConfettiWidget(
+                  confettiController: value.confettiController!,
+                  blastDirectionality: BlastDirectionality.directional,
+                  blastDirection: 3.14 / 4, // 45 degrees toward bottom-right
+                  maxBlastForce: 20,
+                  minBlastForce: 10,
+                  emissionFrequency: 0.05,
+                  numberOfParticles: 50,
+                  gravity: 0.1,
+                ),
               ),
-            ),
 
-            // Top-right confetti
-            Positioned(
-              top: 0,
-              right: 0,
-              child: ConfettiWidget(
-                confettiController: value.confettiController,
-                blastDirectionality: BlastDirectionality.directional,
-                blastDirection: 3.14 * 3 / 4, // 135 degrees toward bottom-left
-                maxBlastForce: 20,
-                minBlastForce: 10,
-                emissionFrequency: 0.05,
-                numberOfParticles: 50,
-                gravity: 0.1,
+              // Top-right confetti
+              Positioned(
+                top: 0,
+                right: 0,
+                child: ConfettiWidget(
+                  confettiController: value.confettiController!,
+                  blastDirectionality: BlastDirectionality.directional,
+                  blastDirection: 3.14 * 3 / 4, // 135 degrees toward bottom-left
+                  maxBlastForce: 20,
+                  minBlastForce: 10,
+                  emissionFrequency: 0.05,
+                  numberOfParticles: 50,
+                  gravity: 0.1,
+                ),
               ),
-            ),
+            ],
           ],
         );
       },

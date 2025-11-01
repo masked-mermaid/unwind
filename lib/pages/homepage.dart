@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:unwind/boxes.dart';
 import 'package:unwind/custom_widgets/nue_box.dart';
 import 'package:unwind/custom_widgets/nue_buttons.dart';
-import 'package:unwind/data/quotes/get_quotes.dart';
-// import 'package:unwind/models/meditationoptions.dart';
 import 'package:unwind/pages/meditationpage.dart';
 import 'package:unwind/provider/meditation_provider.dart';
 import 'package:unwind/provider/quotes_provider.dart';
@@ -29,8 +25,17 @@ class Homepage extends StatelessWidget {
                 // Colors.grey.shade400,
                 Theme.of(context).colorScheme.surface,
 
-            drawer: Drawer(
-              // child: ,
+            drawer: const Drawer(
+              child: SafeArea(
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: Text('Settings'),
+                      leading: Icon(Icons.settings),
+                    ),
+                  ],
+                ),
+              ),
             ),
 
             appBar: AppBar(
@@ -47,40 +52,22 @@ class Homepage extends StatelessWidget {
                     // height: 30,
                     width: 70,
                     decoration: BoxDecoration(
-                      border: optionLists.streak? Border.all(
-                        width: 2,
-                        color: Colors.deepPurpleAccent
-                      ): null,
                       color: Theme.of(context).colorScheme.onSurface,
-                      // color: Colors.grey.shade600,
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                                      
-                        
-                                      
-                      optionLists.streak?
-                      Lottie.asset(
-                        'assets/lottie/Streak Fire.json',
-                        height: 52, 
-                        backgroundLoading: true,
-                      )
-                                      
-                      :  HugeIcon(
+                        HugeIcon(
                           icon: HugeIcons.strokeRoundedFire03,
                           color: Colors.grey,
                         ),
                         Text(
                           '3',
                           style: TextStyle(
-                            fontSize: optionLists.streak?24:18,
-                            // fontWeight: FontWeight.bold,
-                            color:
-                                Theme.of(context).colorScheme.inversePrimary,
-                                // Colors.white
+                            fontSize: 18,
+                            color: Colors.white70,
                           ),
                         ),
                       ],
@@ -100,32 +87,32 @@ class Homepage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(
+                  const Text(
                     'Welcome Back, Jake',
                     style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                   ),
                   // SizedBox(height: 24,),
                   GestureDetector(
-                    onTap: () {
-                      Clipboard.setData(
-                        ClipboardData(
-                          text:
-                              " ${box.getAt(quotesdata.quoteIndex)?.quote} \n- ${box.getAt(quotesdata.quoteIndex)?.author}",
-                        ),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Quote copied to clipboard"),
-                          action: SnackBarAction(
-                            label: 'OK',
-                            onPressed: () {
-                              ScaffoldMessenger.of(
-                                context,
-                              ).hideCurrentSnackBar();
-                            },
+                    onTap: () async {
+                      if (quotesdata.currentQuote != null) {
+                        final quote = quotesdata.currentQuote!;
+                        await Clipboard.setData(
+                          ClipboardData(
+                            text: " ${quote.quote} \n- ${quote.author}",
                           ),
-                        ),
-                      );
+                        );
+                        if (!context.mounted) return;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: const Text("Quote copied to clipboard"),
+                            duration: const Duration(seconds: 2),
+                            action: SnackBarAction(
+                              label: 'OK',
+                              onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(),
+                            ),
+                          ),
+                        );
+                      }
                     },
                     child: NeuBox(
                       child: SizedBox(
@@ -137,9 +124,10 @@ class Homepage extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                // '"Lack of emotion causes lack of progress \n and lack of motivation \n \n \n \t\t\t\t-Tony Robbins',
-                                " '' ${box.getAt(quotesdata.quoteIndex)?.quote} ''",
-                                style: TextStyle(fontSize: 16),
+                                quotesdata.currentQuote != null
+                                    ? " '' ${quotesdata.currentQuote!.quote} ''"
+                                    : "Loading quote...",
+                                style: const TextStyle(fontSize: 16),
                               ),
                             ),
 
@@ -148,9 +136,11 @@ class Homepage extends StatelessWidget {
                               child: SizedBox(
                                 width: 300,
                                 child: Text(
-                                  "${box.getAt(quotesdata.quoteIndex)?.author} - ",
+                                  quotesdata.currentQuote != null
+                                      ? "${quotesdata.currentQuote!.author} - "
+                                      : "",
                                   textDirection: TextDirection.rtl,
-                                  style: TextStyle(fontSize: 16),
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                               ),
                             ),
