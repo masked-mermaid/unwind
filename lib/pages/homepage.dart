@@ -172,7 +172,7 @@ class Homepage extends StatelessWidget {
                       Clipboard.setData(
                         ClipboardData(
                           text:
-                              " ${box.getAt(quotesdata.quoteIndex)?.quote} \n- ${box.getAt(quotesdata.quoteIndex)?.author}",
+                              '${box.getAt(quotesdata.quoteIndex)?.quote ?? "It always seems impossible until it\'s done."}\n- ${box.getAt(quotesdata.quoteIndex)?.author ?? "Nelson Mandela"}',
                         ),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -199,10 +199,10 @@ class Homepage extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                // '"Lack of emotion causes lack of progress \n and lack of motivation \n \n \n \t\t\t\t-Tony Robbins',
-                                " '' ${box.getAt(quotesdata.quoteIndex)?.quote} ''",
-                                style: TextStyle(fontSize: 16),
-                              ),
+                                  // '"Lack of emotion causes lack of progress \n and lack of motivation \n \n \n \t\t\t\t-Tony Robbins',
+                                  '${box.getAt(quotesdata.quoteIndex)?.quote ?? "It always seems impossible until it\'s done."}',
+                                  style: TextStyle(fontSize: 16),
+                                ),
                             ),
 
                             Padding(
@@ -210,7 +210,7 @@ class Homepage extends StatelessWidget {
                               child: SizedBox(
                                 width: 300,
                                 child: Text(
-                                  "${box.getAt(quotesdata.quoteIndex)?.author} - ",
+                                  '${box.getAt(quotesdata.quoteIndex)?.author ?? "Nelson Mandela"}',
                                   textDirection: TextDirection.rtl,
                                   style: TextStyle(fontSize: 16),
                                 ),

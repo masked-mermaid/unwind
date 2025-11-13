@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:unwind/data/quotes/get_quotes.dart';
 import 'package:unwind/pages/homepage.dart';
 
 class Intropage extends StatelessWidget {
   Intropage({super.key});
 
   final List<PageViewModel> listPagesViewModel = [
+    
+
     PageViewModel(
       title: "Welcome to UNWIND",
       body:
@@ -42,10 +45,14 @@ class Intropage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IntroductionScreen(
+    
       pages: listPagesViewModel,
       showNextButton: true,
       showSkipButton: false,
-      onDone: () => _completeOnboarding(context),
+      onDone: ()  {
+  // fetchAndSaveQuotes();
+
+    _completeOnboarding(context);},
       skip: const Text("Skip"),
       next: const Icon(Icons.arrow_forward),
       done: const Text("Done", style: TextStyle(fontWeight: FontWeight.w600)),

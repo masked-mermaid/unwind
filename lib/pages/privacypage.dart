@@ -21,7 +21,7 @@ class _PrivacyPageState extends State<PrivacyPage>
   late Animation<Color?> _glowColor;
 
   // 🔸 Define the maximum number of GIFs.
-  final int totalShreks = 25; 
+  final int totalShreks = 8; 
 
   @override
   void initState() {

@@ -26,7 +26,7 @@ Future<void> main() async {
   box = await Hive.openBox<Quotes>('quotesbox');
 
   // Fetch quotes (if needed)
-  fetchAndSaveQuotes();
+  await fetchAndSaveQuotes();
 
   // Check if user has seen onboarding
   final prefs = await SharedPreferences.getInstance();
