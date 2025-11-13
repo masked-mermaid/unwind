@@ -9,8 +9,11 @@ import 'package:unwind/custom_widgets/nue_buttons.dart';
 import 'package:unwind/data/quotes/get_quotes.dart';
 // import 'package:unwind/models/meditationoptions.dart';
 import 'package:unwind/pages/meditationpage.dart';
+import 'package:unwind/pages/privacypage.dart';
+import 'package:unwind/pages/settings.dart';
 import 'package:unwind/provider/meditation_provider.dart';
 import 'package:unwind/provider/quotes_provider.dart';
+import 'package:unwind/provider/userdata_provider.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
@@ -19,7 +22,8 @@ class Homepage extends StatelessWidget {
   Widget build(BuildContext context) {
     final optionLists = Provider.of<MeditationProvider>(context);
     final quotesdata = Provider.of<QuotesProvider>(context);
-
+    final userdata =context.watch<UserDataProvider>();
+    TextEditingController textController= TextEditingController();
     // final  box =await Hive.openBox<Quotes>('quotesbox');
 
     return Consumer(
@@ -30,7 +34,30 @@ class Homepage extends StatelessWidget {
                 Theme.of(context).colorScheme.surface,
 
             drawer: Drawer(
-              // child: ,
+            shape: BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(22))),
+              child: ListView(
+                children: [
+                 
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=> const SettingsPage()));
+                    },
+                    child: ListTile(
+                      leading: Text("Settings"),
+                    
+                    ),
+                  ), GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=> const PrivacyPage()));
+                    },
+                    child: ListTile(
+                      leading: Text("Privacy Policy"),
+                    
+                    ),
+                  ),
+                  
+                ],
+              )
             ),
 
             appBar: AppBar(
@@ -40,14 +67,13 @@ class Homepage extends StatelessWidget {
               backgroundColor:
                   // Colors.grey.shade400,
                   Theme.of(context).colorScheme.surface,
-              actions: [
-                Padding(
+            actions:[Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     // height: 30,
                     width: 70,
                     decoration: BoxDecoration(
-                      border: optionLists.streak? Border.all(
+                      border: optionLists.hasMeditatedToday? Border.all(
                         width: 2,
                         color: Colors.deepPurpleAccent
                       ): null,
@@ -62,7 +88,7 @@ class Homepage extends StatelessWidget {
                                       
                         
                                       
-                      optionLists.streak?
+                      optionLists.hasMeditatedToday?
                       Lottie.asset(
                         'assets/lottie/Streak Fire.json',
                         height: 52, 
@@ -74,9 +100,9 @@ class Homepage extends StatelessWidget {
                           color: Colors.grey,
                         ),
                         Text(
-                          '3',
+                          userdata.userStreak.toString(),
                           style: TextStyle(
-                            fontSize: optionLists.streak?24:18,
+                            fontSize: optionLists.hasMeditatedToday?24:18,
                             // fontWeight: FontWeight.bold,
                             color:
                                 Theme.of(context).colorScheme.inversePrimary,
@@ -87,7 +113,7 @@ class Homepage extends StatelessWidget {
                     ),
                   ),
                 ),
-              ],
+            ]
             ),
             body: Padding(
               // padding: EdgeInsets.all(8),
@@ -100,9 +126,45 @@ class Homepage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(
-                    'Welcome Back, Jake',
-                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                  GestureDetector(
+                    onTap: () {
+                      showDialog(context: context, builder: (context){
+                        return  AlertDialog(
+      title: const Text('Enter your name'),
+      content: TextField(
+        // onChanged: (value) {
+        //   _enteredText = value;
+        // },
+
+        controller: textController,
+        decoration: const InputDecoration(hintText: 'Name'),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () async{
+            final String enteredName =textController.text;
+
+
+            if (enteredName.isNotEmpty){
+            userdata.saveName(enteredName);
+            }
+            // handle save and close
+            Navigator.of(context).pop();
+          },
+          child: const Text('OK'),
+        ),
+      ],
+    );
+                      });
+                    },
+                    child: Text(
+                      'Welcome Back, ${userdata.userName}',
+                      style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                    ),
                   ),
                   // SizedBox(height: 24,),
                   GestureDetector(

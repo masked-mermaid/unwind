@@ -20,10 +20,11 @@ import 'package:hive/hive.dart';
         return Quotes(quote: item["q"],
          author: item["a"],
          characterCount: int.tryParse(item["c"]?? "0")??0);
-      }).toList();
+      }).toList();     
+     print('box length = ${box.length}');
+      quotes.sort((a, b) => a.characterCount.compareTo(b.characterCount));
+
       await box.addAll(quotes);
-      print('box length = ${box.length}');
-      
       
     }else {throw Exception("failed to fetch quotes");}
 

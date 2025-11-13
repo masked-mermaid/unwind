@@ -40,7 +40,7 @@ class Meditationpage extends StatelessWidget {
                       Lottie.asset(
                         'assets/lottie/Meditating Rabbit.json',
                         height: 250,
-                        frameRate: FrameRate(0.2),
+                        frameRate: FrameRate(.2),
                       ),
                     ],
                   ),
